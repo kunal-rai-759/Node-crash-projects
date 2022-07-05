@@ -8,7 +8,7 @@ const server = http.createServer((req,res)=>{
 
     // set header
     res.setHeader('Content-Type','text/html')
-    let path = './views/'
+    let path = './view/'
     switch (req.url) {
         case '/':
             path += 'index.html'

@@ -1,0 +1,22 @@
+<%- include('./partials/head.ejs')%>
+<%- include('./partials/nav.ejs')%>
+    <h2>blogs</h2>
+    <p>This is the blog list.</p>
+
+    <div class="blogs-block">
+        <h2>All Blogs</h2>
+        <% if(blogs.length > 0){ %>
+            <%  blogs.forEach((blog)=>{ %>
+            
+            
+            <a href="/blogs/<%=blog._id%>">
+                <h4><%= blog.title %></h4>
+                <p><%= blog.snippet %></p>
+            </a>
+
+        <% }) }else{ %>
+            <p>There are no blogs.</p>
+        <% } %>
+    </div>
+
+<%- include('./partials/footer.ejs')%>

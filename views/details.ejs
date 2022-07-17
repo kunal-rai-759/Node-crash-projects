@@ -1,0 +1,36 @@
+<%- include('./partials/head.ejs')%>
+<%- include('./partials/nav.ejs')%>
+    <h2>blogs</h2>
+    <p>This is the blog list.</p>
+    <div class="">
+        <label for="title">Blog Title:</label>
+        <input type="text" name="title" id="title" value="<%=blog.title %>">
+        <label for="snippet">Blog Snippet:</label>
+        <input type="text" name="snippet" id="snippet" value="<%=blog.snippet %>">
+        <label for="body">Blog Body:</label>
+        <textarea name="body" id="body" cols="30" rows="5"><%=blog.body %></textarea>
+    </div>
+
+    <a class="delete" data-doc="<%=blog._id%>">delete</a>
+
+
+
+    <script>
+        const ele = document.querySelector('a.delete')
+        ele.addEventListener('click',(e)=>{
+            const endpoint = `/blogs/${ele.dataset.doc}`
+
+            // if(confirm('Are you sure you want to delete it?'))
+            fetch(endpoint,{
+                method:'DELETE'
+            })
+            .then((jdata)=>jdata.json())
+            .then((data)=>{
+                window.location.href = data.redirect
+                // console.log('data',data)
+            })
+            .catch((err)=>{console.log(err)})
+        })
+    </script>
+
+<%- include('./partials/footer.ejs')%>

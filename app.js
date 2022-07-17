@@ -1,24 +1,31 @@
 const express = require('express')
 const morgan = require('morgan')
+const mongoose = require('mongoose')
+const blogRouter = require('./routes/blogRoutes')
+
+
 // express app
 const app = express()
 
-app.set('view engine','ejs')
+// connection to mongoDB
+const dbURI = 'mongodb+srv://kunalrai:'+encodeURIComponent("kunal@123")+'@nodetutorial.4zytr.mongodb.net/node-tutorial?retryWrites=true&w=majority'
+mongoose.connect(dbURI)
+.then((result)=>{
+    console.log('db is connected')
+    console.log(result)
+})
+.catch((err)=>{
+    console.log('db has error')
+    console.log(err)
 
-
-// listen for requests
-app.listen(3000)
+})
 
 
 // express.static is for adding static files
 // it will also act as a middleware
 
 app.use(express.static('public'))
-
-
-
-
-
+app.use(express.urlencoded({extended:true}))
 // middleware : It is act as a constructor to the request(depends on where we put it).
 // In our case we are using it initially so it will act like constrctor.
 //      we will use next() functon for middle ware.
@@ -33,7 +40,22 @@ app.use(express.static('public'))
 
 // app.use(morgan('common'))//::1 - - [05/Jul/2022:17:05:37 +0000] "GET / HTTP/1.1" 200 437
 app.use(morgan('tiny'))//GET / 304 - - 18.016 ms
+
+
+
+
+app.set('view engine','ejs')
+
+
+// listen for requests
+app.listen(3000)
+
+
+
 // ejs render
+
+// blog routes
+app.use(blogRouter)
 
 app.get('/',(req,res)=>{
     res.render('index',{title : 'Home'})
@@ -41,9 +63,7 @@ app.get('/',(req,res)=>{
 app.get('/about',(req,res)=>{
     res.render('about',{title : 'About'})
 })
-app.get('/blog/create',(req,res)=>{
-    res.render('create',{title : 'Create a new blog'})
-})
+
 app.use((req,res)=>{
     res.status(404).render('404',{title : '404 Not found'})
 })

@@ -8,7 +8,7 @@ const blogRouter = require('./routes/blogRoutes')
 const app = express()
 
 // connection to mongoDB
-const dbURI = 'mongodb+srv://kunalrai:'+encodeURIComponent("kunal@123")+'@nodetutorial.4zytr.mongodb.net/node-tutorial?retryWrites=true&w=majority'
+const dbURI = 'ABC' //MONGO URI
 mongoose.connect(dbURI)
 .then((result)=>{
     console.log('db is connected')
